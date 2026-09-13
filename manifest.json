@@ -1,0 +1,12 @@
+{
+  "id": "praytime-pwa",
+  "name": "Prayer Times",
+  "short_name": "Prayer",
+  "description": "Offline daily prayer times",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
