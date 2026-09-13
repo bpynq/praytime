@@ -55,8 +55,7 @@
       { key: 'sunrise', name: 'Sunrise', ts: data.sunrise.tomorrowTs }
     ];
 
-    const nextIdx = timeline.findIndex((event) => event.ts > now);
-    const nextEvent = nextIdx === -1 ? timeline[timeline.length - 1] : timeline[nextIdx];
+    const nextEvent = timeline.find((event) => event.ts > now) || timeline[timeline.length - 1];
 
     const diff = Math.max(0, nextEvent.ts - now);
     const relativeTime = formatRelativeTime(diff);
