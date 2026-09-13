@@ -1,11 +1,13 @@
-const CACHE_NAME = 'praytime-v1';
+const CACHE_NAME = 'praytime-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
   './praytime.js',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
