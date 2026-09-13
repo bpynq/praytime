@@ -46,7 +46,7 @@
       { key: 'fajr', name: 'Fajr', ts: data.fajr.todayTs },
       { key: 'sunrise', name: 'Sunrise', ts: data.sunrise.todayTs },
       { key: 'dhuhr', name: 'Dhuhr', ts: data.dhuhr.todayTs },
-      { key: 'asr', name: 'Asr', ts: data.asr.standardTs },
+      { key: 'asr', name: 'Asr', ts: data.asr.hanafiTs },
       { key: 'sunset', name: 'Sunset', ts: data.sunset.todayTs },
       { key: 'isha', name: 'Isha', ts: data.isha.todayTs },
       { key: 'midnight', name: 'Midnight', ts: data.midnight.todayTs },
@@ -58,19 +58,12 @@
     const nextIdx = timeline.findIndex((event) => event.ts > now);
     const nextEvent = nextIdx === -1 ? timeline[timeline.length - 1] : timeline[nextIdx];
 
-    let currentKey = 'isha';
-    if (nextIdx === -1) {
-      currentKey = timeline[timeline.length - 1].key;
-    } else if (nextIdx > 0) {
-      currentKey = timeline[nextIdx - 1].key;
-    }
-
     const diff = Math.max(0, nextEvent.ts - now);
     const relativeTime = formatRelativeTime(diff);
     const text = relativeTime === 'now' ? `${nextEvent.name} now` : `${nextEvent.name} ${relativeTime}`;
 
     return {
-      currentKey,
+      nextKey: nextEvent.key,
       text
     };
   }
@@ -102,7 +95,7 @@
   const prayerList = document.getElementById('prayerList');
   prayerList.innerHTML = ROWS.map((row) => `
     <div class="prayer-row" data-key="${row.key}" role="row">
-      <span class="prayer-name" role="rowheader">${row.name}<span class="active-badge" aria-label="Current prayer">Active</span></span>
+      <span class="prayer-name" role="rowheader">${row.name}<span class="active-badge" aria-label="Upcoming prayer">Upcoming</span></span>
       <div class="times-group">
         <span class="time-col secondary" role="cell">${row.leftId ? `<span class="slot-time" id="${row.leftId}">--:--</span>` : ''}</span>
         <span class="time-col primary" role="cell"><span class="slot-time" id="${row.middleId}">--:--</span></span>
@@ -189,7 +182,7 @@
 
     prayerRows.forEach((row) => {
       const key = row.getAttribute('data-key');
-      row.classList.toggle('active', key === nextInfo.currentKey);
+      row.classList.toggle('active', key === nextInfo.nextKey);
     });
   }
 
